@@ -30,6 +30,9 @@ RUN echo '#!/bin/bash' > /fix-permissions.sh && \
     echo 'exec /entrypoint.sh "$@"' >> /fix-permissions.sh && \
     chmod +x /fix-permissions.sh
 
+COPY check-volume.sh /check-volume.sh
+RUN chmod +x /check-volume.sh
+
 EXPOSE 8123
 
-CMD ["/fix-permissions.sh"]
+CMD ["sh", "-c", "sh /check-volume.sh && exec /fix-permissions.sh"]
